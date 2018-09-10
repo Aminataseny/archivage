@@ -8,7 +8,8 @@ security:
         ROLE_SECRETAIRE:       ROLE_SECRETAIRE
         ROLE_DIRECTEUR:       ROLE_DIRECTEUR
         ROLE_COMPTABLE:       ROLE_COMPTABLE
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_COMPTABLE:       ROLE_ACHAT
+        ROLE_SUPER_ADMIN: ROLE_SUPER_ADMIN
 
     providers:
         fos_userbundle:
@@ -22,6 +23,7 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
+                success_handler:redirect.after.login
 
             logout:       true
             anonymous:    true

@@ -33,3 +33,7 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    #redirection after login
+    redirect.after.login:
+        class: AppBundle\Redirection\AfterLoginRedirection
+        arguments: ['@router']
