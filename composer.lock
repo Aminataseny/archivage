@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1508506051447e6234428da22aa5934d",
+    "content-hash": "64eb4dd987cce08c176659610e7d2b05",
     "packages": [
+        {
+            "name": "bnbc/upload-bundle",
+            "version": "dev-master",
+            "target-dir": "Bnbc/UploadBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bnbc/Symfony-Upload-Ajax.git",
+                "reference": "527f9221e99491d7e3637d32f5aefb8cf1221fb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bnbc/Symfony-Upload-Ajax/zipball/527f9221e99491d7e3637d32f5aefb8cf1221fb8",
+                "reference": "527f9221e99491d7e3637d32f5aefb8cf1221fb8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.8",
+                "symfony/framework-bundle": "^2.3 || ^3.0",
+                "twig/twig": "*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Bnbc\\UploadBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Beyssac",
+                    "email": "benjamin.beyssac@gmail.com",
+                    "homepage": "http://www.benjamin-beyssac.fr",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Symfony Upload Ajax Bundle",
+            "keywords": [
+                "ajax",
+                "symfony",
+                "upload"
+            ],
+            "time": "2018-03-14T17:12:41+00:00"
+        },
         {
             "name": "composer/ca-bundle",
             "version": "1.1.2",
@@ -2520,7 +2566,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "bnbc/upload-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

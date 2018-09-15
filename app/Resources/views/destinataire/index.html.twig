@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Destinataires list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for destinataire in destinataires %}
+            <tr>
+                <td><a href="{{ path('destinataire_show', { 'id': destinataire.id }) }}">{{ destinataire.id }}</a></td>
+                <td>{{ destinataire.nom }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('destinataire_show', { 'id': destinataire.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('destinataire_edit', { 'id': destinataire.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('destinataire_new') }}">Create a new destinataire</a>
+        </li>
+    </ul>
+{% endblock %}
