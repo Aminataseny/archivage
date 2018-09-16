@@ -4,3 +4,8 @@ app:
 # app/config/routing.yml
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+bnbc_upload:
+    resource: "@BnbcUploadBundle/Controller/"
+    type:     annotation
+    prefix:   /upload

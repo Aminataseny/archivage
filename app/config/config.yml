@@ -36,6 +36,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - BnbcUploadBundle:Form:fields.html.twig
 
 # Doctrine Configuration
 doctrine:
@@ -78,3 +80,22 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+
+bnbc_upload:
+    uniqid: true
+    max_file_size: 10485760
+    accept_file_types: '/\.(gif|jpe?g|png)$/i'
+    upload_folder: 'uploads'
+    image_versions:
+        thumbnail:
+            max_width: 100
+            max_height: 100
+            crop: true
+        medium:
+            max_width: 300
+            max_height: 300
+            crop: false
+        large:
+            max_width: 1024
+            max_height: 768
+            crop: false

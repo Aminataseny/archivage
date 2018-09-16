@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="admin_index")
+     * @Route("/", name="default_index")
      */
     public function indexAction(Request $request)
     {
