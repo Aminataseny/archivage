@@ -6,6 +6,7 @@ use AppBundle\Entity\Document;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,7 +49,7 @@ class DocumentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($document);
             if($document->getFichier()){
-                $document->setFichier($this->_movePhoto($document));
+                // $document->setFichier($this->_movePhoto($document));
             }            
 
             $em->flush();
@@ -138,6 +139,9 @@ class DocumentController extends Controller
             ->getForm()
         ;
     }
+
+
+    /*
      # Traitement de la photo
     protected function _movePhoto($data){
         $fs = new Filesystem();
@@ -146,14 +150,14 @@ class DocumentController extends Controller
         $coach_dir = $this->_createEntityFolder($data);
 
         # On déplace la photo dans le dossier
-        if($photo = $data->getPhoto()){
-            $ext = pathinfo($photo, PATHINFO_EXTENSION);
-            $name = 'photo.' . $ext;
+        if($fichier = $data->getFichier()){
+            $ext = pathinfo($fichier, PATHINFO_EXTENSION);
+            $name = 'fichier.' . $ext;
 
             # Si le fichier existe (il peut ne pas exister dans le cas d'une modification où on uploaderai pas un nouveau fichier)
-            if(file_exists($dir . $photo)){
-                $fs->copy($dir . $photo, $coach_dir . '/' . $name, true);
-                $fs->remove($dir . $photo);
+            if(file_exists($dir . $fichier)){
+                $fs->copy($dir . $fichier, $coach_dir . '/' . $name, true);
+                $fs->remove($dir . $fichier);
             }
             return $name;
         }
@@ -162,4 +166,18 @@ class DocumentController extends Controller
         }
     }
 
+
+    # Création du dossier pour accueillir l'image
+    protected function _createEntityFolder($data){
+        $fs = new Filesystem();
+        $dir = $this->get('kernel')->getRootDir() . '/../web/data/entity/' . $data->getId();
+        try {
+            $fs->mkdir($dir);
+        }
+        catch (IOExceptionInterface $e) {
+            echo "Une erreur est survenue lors de la création du dossier : ". $e->getPath();
+        }
+        return $dir;
+    }
+    */
 }

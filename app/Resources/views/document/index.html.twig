@@ -21,7 +21,7 @@
                 <td>{{ document.titre }}</td>
                 <td>{% if document.dateCreation %}{{ document.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ document.commentaire }}</td>
-                <td>{{ document.fichier }}</td>
+                <td><img src="{{ asset('uploads/' ~ document.fichier) }}" alt=""></td>
                 <td>
                     <ul>
                         <li>

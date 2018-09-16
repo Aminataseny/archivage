@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="{{ asset('vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
+        <!-- inject:css -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    </head>
+    <body>
+        {#<div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>#}
+
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+                <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+                    <div class="row w-100">
+                        <div class="col-lg-4 mx-auto">
+                            <div class="auto-form-wrapper">
+                                {% if app.request.hasPreviousSession %}
+                                    {% for type, messages in app.session.flashbag.all() %}
+                                        {% for message in messages %}
+                                            <div class="flash-{{ type }}">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% block fos_user_content %}{% endblock fos_user_content %}
+                            </div>
+
+                            <p class="footer-text text-center">copyright © {{ "now"|date('Y') }} Archivage. Tous les droits réservés.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+
+
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
+        <script src="{{ asset('vendors/js/vendor.bundle.addons.js') }}"></script>
+        <!-- endinject -->
+        <!-- inject:js -->
+        <script src="{{ asset('js/off-canvas.js') }}"></script>
+        <script src="{{ asset('js/misc.js') }}"></script>
+        <!-- endinject -->
+    </body>
+</html>

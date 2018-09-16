@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
@@ -38,6 +38,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - BnbcUploadBundle:Form:fields.html.twig
+        - 'bootstrap_4_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -84,7 +85,7 @@ fos_user:
 bnbc_upload:
     uniqid: true
     max_file_size: 10485760
-    accept_file_types: '/\.(gif|jpe?g|png)$/i'
+    accept_file_types: '/\.(gif|jpe?g|png|pdf|txt|docs)$/i'
     upload_folder: 'uploads'
     image_versions:
         thumbnail:

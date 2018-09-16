@@ -3,11 +3,43 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
+            <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
+            <!-- inject:css -->
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    {% include 'nav.html.twig' %}
+    <div class="container-fluid page-body-wrapper">
+
+        {% include 'sidebar.html.twig' %}
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                {% block body %}{% endblock %}
+            </div>
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+        {% block javascripts %}
+            <!-- container-scroller -->
+            <!-- plugins:js -->
+            <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
+            <script src="{{ asset('vendors/js/vendor.bundle.addons.js') }}"></script>
+            <!-- endinject -->
+            <!-- inject:js -->
+            <script src="{{ asset('js/off-canvas.js') }}"></script>
+            <script src="{{ asset('js/misc.js') }}"></script>
+            <!-- endinject -->
+            <!-- Custom js for this page-->
+            <script src="{{ asset('js/dashboard.js') }}"></script>
+            <!-- End custom js for this page-->
+        {% endblock %}
     </body>
 </html>
