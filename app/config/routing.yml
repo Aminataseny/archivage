@@ -9,3 +9,7 @@ bnbc_upload:
     resource: "@BnbcUploadBundle/Controller/"
     type:     annotation
     prefix:   /upload
+
+fos_message:
+    resource: "@FOSMessageBundle/Resources/config/routing.xml"
+    prefix: /optional_routing_prefix
