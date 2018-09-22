@@ -20,12 +20,21 @@
                 </button>
             </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="menu-icon mdi mdi-television"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_index') }}">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Utilisateurs</span>
+                </a>
+            </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="menu-icon mdi mdi-television"></i>
+                        <span class="menu-title">Tableau de bord</span>
+                    </a>
+                </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="menu-icon mdi mdi-content-copy"></i>
