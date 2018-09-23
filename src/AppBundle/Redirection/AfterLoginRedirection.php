@@ -66,7 +66,8 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
             $redirection = new RedirectResponse($this->router->generate('achat_index'));
         }
         else {
-            $redirection = $this->redirectToRoute('default_index');
+            // $redirection = $this->redirectToRoute('default_index');
+            $redirection = new RedirectResponse($this->router->generate('default_index'));
         }
 
         return $redirection;

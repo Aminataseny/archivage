@@ -23,33 +23,30 @@ class User extends BaseUser implements ParticipantInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank(message="Entrez votre nom", groups={"Registration", "Profile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max=255,
-     *     minMessage="The name is too short.",
-     *     maxMessage="The name is too long.",
-     *     groups={"Registration", "Profile"}
-     * )
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $lastname;
 
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank(message="Entrez votre prénom", groups={"Registration", "Profile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max=255,
-     *     minMessage="The name is too short.",
-     *     maxMessage="The name is too long.",
-     *     groups={"Registration", "Profile"}
-     * )
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $firstname;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     */
+    protected $photo;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     */
+    protected $role;
+
 
 
 
@@ -105,5 +102,68 @@ class User extends BaseUser implements ParticipantInterface
     public function getFirstname()
     {
         return $this->firstname;
+    }
+
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return User
+     */
+    public function setPhot($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return User
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

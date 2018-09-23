@@ -3,6 +3,7 @@
 
 namespace AppBundle\Form;
 
+use Bnbc\UploadBundle\Form\Type\AjaxfileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -10,8 +11,20 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstname');
-        $builder->add('lastname');
+        $builder
+            ->add('firstname')
+            ->add('lastname')
+            ->add('photo',AjaxfileType::class, array(
+                    'required'            => false,
+                    'compound'            => false,
+                    'progressBar'         => false,
+                    'progressBarClass'    => 'bnbc-ajax-file-progress',
+                    'progressBarPosition' => 'append',
+                    'multiple'            => false,
+                    'label'               => null,
+                )
+            )
+        ;
     }
 
     public function getParent()

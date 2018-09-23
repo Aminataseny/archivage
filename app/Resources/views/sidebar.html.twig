@@ -5,19 +5,37 @@
             <div class="nav-link">
                 <div class="user-wrapper">
                     <div class="profile-image">
-                        <img src="images/faces/face1.jpg" alt="profile image">
+                        <img src="{{ asset('images/logo-iris.jpg') }}" alt="profile image">
                     </div>
                     <div class="text-wrapper">
-                        <p class="profile-name">Richard V.Welsh</p>
+                        <p class="profile-name">
+                            {{ app.user.username }}
+                        </p>
                         <div>
-                            <small class="designation text-muted">Manager</small>
+                            <small class="designation text-muted">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    Administrateur
+                                    {% elseif is_granted('ROLE_DIRECTEUR') %}
+                                    Directeur
+                                    {% elseif is_granted('ROLE_SECRETAIRE') %}
+                                    Secrétaire
+                                    {% elseif is_granted('ROLE_TECHNICIEN') %}
+                                    Technicien
+                                    {% elseif is_granted('ROLE_ACHAT') %}
+                                    Responsable achat
+                                    {# elseif is_granted('ROLE_LOGISTIC') %}
+                                    Responsable logistique #}
+                                {% endif %}
+                            </small>
                             <span class="status-indicator online"></span>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-success btn-block">New Project
+                {% if not is_granted('ROLE_SUPER_ADMIN') %}
+                <button class="btn btn-success btn-block">Nouveau document
                     <i class="mdi mdi-plus"></i>
                 </button>
+                {% endif %}
             </div>
         </li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -34,6 +52,14 @@
                         <span class="menu-title">Tableau de bord</span>
                     </a>
                 </li>
+        {% endif %}
+        {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_DIRECTEUR') %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('admin_stats') }}">
+                <i class="menu-icon mdi mdi-elevation-rise"></i>
+                <span class="menu-title">Statistiques</span>
+            </a>
+        </li>
         {% endif %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

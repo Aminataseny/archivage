@@ -53,14 +53,14 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i fa fa-eye></i>
-                                    </button>
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         <a class="dropdown-item" href="{{ path('enabled', {'status': 1, 'user':user.id}) }}">Activer</a>
                                         <a class="dropdown-item" href="{{ path('enabled', {'status': 0, 'user':user.id}) }}">Désactiver</a>
                                     </div>
                                 </div>
+                                &nbsp;&nbsp;
+                                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-primary">Modifier</a>
                             </td>
                         </tr>
                         {% endfor %}

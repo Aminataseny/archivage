@@ -51,4 +51,13 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin_index') ;
     }
 
+    /**
+     * @Route("/admin/statistics",name="admin_stats")
+     */
+    public function statsAction()
+    {
+        return $this->render('AppBundle:Admin:stats.html.twig', array(
+           // ...
+        ));
+    }
 }

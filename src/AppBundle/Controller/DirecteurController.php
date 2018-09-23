@@ -12,8 +12,12 @@ class DirecteurController extends Controller
      */
     public function indexAction()
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $documents = $em->getRepository('AppBundle:Document')->findAll();
+
         return $this->render('AppBundle:Directeur:index.html.twig', array(
-            // ...
+            "documents" => $documents
         ));
     }
 

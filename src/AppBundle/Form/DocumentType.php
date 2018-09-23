@@ -24,12 +24,8 @@ class DocumentType extends AbstractType
         'progressBarPosition' => 'append',
         'multiple'            => false,
         'label'               => null,
-    )
-)
-
-                
-    
-
+            )
+        )
         ->add('categorie')
         ->add('destinataire');
     }
