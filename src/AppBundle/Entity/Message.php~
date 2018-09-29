@@ -1,15 +1,16 @@
 <?php
-// src/AppBundle/Entity/ThreadMetadata.php
+// src/AppBundle/Entity/Message.php
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
+use Doctrine\Common\Collections\Collection;
+use FOS\MessageBundle\Entity\Message as BaseMessage;
 
 /**
  * @ORM\Entity
  */
-class ThreadMetadata extends BaseThreadMetadata
+class Message extends BaseMessage
 {
     /**
      * @ORM\Id
@@ -21,7 +22,7 @@ class ThreadMetadata extends BaseThreadMetadata
     /**
      * @ORM\ManyToOne(
      *   targetEntity="AppBundle\Entity\Thread",
-     *   inversedBy="metadata"
+     *   inversedBy="messages"
      * )
      * @var \FOS\MessageBundle\Model\ThreadInterface
      */
@@ -31,5 +32,15 @@ class ThreadMetadata extends BaseThreadMetadata
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
-    protected $participant;
+    protected $sender;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="AppBundle\Entity\MessageMetadata",
+     *   mappedBy="message",
+     *   cascade={"all"}
+     * )
+     * @var MessageMetadata[]|Collection
+     */
+    protected $metadata;
 }

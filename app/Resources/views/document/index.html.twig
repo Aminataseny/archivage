@@ -31,14 +31,13 @@
                 <td>{% if document.dateCreation %}{{ document.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ document.commentaire }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('document_show', { 'id': document.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('document_edit', { 'id': document.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="btn btn-primary" href="{{ path('document_show', { 'id': document.id }) }}">
+                        <i class="mdi mdi-eye"></i>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-warning" href="{{ path('document_edit', { 'id': document.id }) }}">
+                        <i class="mdi mdi-account-edit"></i>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

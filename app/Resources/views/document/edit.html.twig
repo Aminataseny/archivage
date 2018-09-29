@@ -4,7 +4,21 @@
     <h1>Document edit</h1>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
+        {{ form_label(edit_form.titre) }}
+        {{ form_widget(edit_form.titre) }}
+    <br>
+        {{ form_label(edit_form.fichier) }}
+        {{ form_widget(edit_form.fichier) }}
+    <br>
+        {{ form_label(edit_form.commentaire) }}
+        {{ form_widget(edit_form.commentaire) }}
+    <br>
+        {{ form_label(edit_form.categorie) }}
+        {{ form_widget(edit_form.categorie) }}
+    <br>
+        {{ form_label(edit_form.users, 'Destinataires') }}
+        {{ form_widget(edit_form.users) }}
+    <br>
         <input type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 

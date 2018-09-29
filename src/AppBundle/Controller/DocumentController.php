@@ -34,6 +34,16 @@ class DocumentController extends Controller
     }
 
     /**
+     * @Route("/mes-documents",name="document_my_docs")
+     */
+    public function mesDocumentsAction() {
+
+        return $this->render('document/mes-documents.html.twig', array(
+            'documents' => $this->getUser()->getDocuments(),
+        ));
+    }
+
+    /**
      * Creates a new document entity.
      *
      * @Route("/new", name="document_new")

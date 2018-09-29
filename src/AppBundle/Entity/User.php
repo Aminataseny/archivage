@@ -48,12 +48,19 @@ class User extends BaseUser implements ParticipantInterface
     protected $role;
 
 
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Document", inversedBy="users")
+     * @ORM\JoinTable(name="users_documents")
+     */
+    private $documents;
 
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,5 +172,39 @@ class User extends BaseUser implements ParticipantInterface
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Add doument
+     *
+     * @param \AppBundle\Entity\Document $doument
+     *
+     * @return User
+     */
+    public function addDoument(\AppBundle\Entity\Document $doument)
+    {
+        $this->documents[] = $doument;
+
+        return $this;
+    }
+
+    /**
+     * Remove doument
+     *
+     * @param \AppBundle\Entity\Document $doument
+     */
+    public function removeDoument(\AppBundle\Entity\Document $doument)
+    {
+        $this->documents->removeElement($doument);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }

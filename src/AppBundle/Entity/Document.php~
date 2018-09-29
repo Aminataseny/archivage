@@ -57,10 +57,10 @@ class Document
     private $categorie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Destinataire", inversedBy="documents")
-     * @ORM\JoinColumn(name="destinataire_id", referencedColumnName="id")
+     * Many Documents have Many Users.
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="documents")
      */
-    private $destinataire;
+    private $users;
 
     public function __constructor(){
         $this->date_creation = new \DateTime("now");
@@ -172,5 +172,29 @@ class Document
     {
         return $this->fichier;
     }
-}
 
+    /**
+     * Set categorie
+     *
+     * @param \AppBundle\Entity\Categorie $categorie
+     *
+     * @return Document
+     */
+    public function setCategorie(\AppBundle\Entity\Categorie $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \AppBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+}

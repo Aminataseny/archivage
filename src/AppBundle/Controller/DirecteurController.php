@@ -16,8 +16,11 @@ class DirecteurController extends Controller
 
         $documents = $em->getRepository('AppBundle:Document')->findAll();
 
+        $users = $em->getRepository('AppBundle:User')->findAll();
+
         return $this->render('AppBundle:Directeur:index.html.twig', array(
-            "documents" => $documents
+            "documents" => $documents,
+            "users" => $users
         ));
     }
 

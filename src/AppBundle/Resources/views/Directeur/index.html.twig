@@ -33,20 +33,17 @@
                                 <td>{% if document.dateCreation %}{{ document.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
                                 <td>{{ document.commentaire }}</td>
                                 <td>
-                                    <ul class="list-unlysted">
-                                        <li>
-                                            <a href="{{ path('document_show', { 'id': document.id }) }}">show</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('document_edit', { 'id': document.id }) }}">edit</a>
-                                        </li>
-                                        <li>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                Rediriger vers
-                                            </button>
-                                        </li>
-                                    </ul>
+                                    <a class="btn btn-primary" href="{{ path('document_show', { 'id': document.id }) }}">
+                                        <i class="mdi mdi-eye"></i>
+                                    </a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-warning" href="{{ path('document_edit', { 'id': document.id }) }}">
+                                        <i class="mdi mdi-account-edit"></i>
+                                    </a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button id="{{ document.id }}" type="button" class="btn btn-primary document" data-toggle="modal" data-target="#exampleModal">
+                                        <i class="mdi mdi-arrow-collapse-right"></i>
+                                    </button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -69,24 +66,28 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#">
+                    <form id="form-redirect" action="{{ path('redirection') }}" method="post">
                         <div class="form-group">
                             <label for="">Choisir les utilisateurs</label>
-                            <select class="selectpicker form-control" multiple data-live-search="true">
-                                <option>Amina</option>
-                                <option>Sény</option>
-                                <option>Mouhamed</option>
+                            <select name="users[]" class="selectpicker form-control" multiple data-live-search="true">
+                                {% for user in users %}
+                                    <option value="{{ user.id }}">
+                                        {{ user.username }}
+                                    </option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="">Commentaire</label>
-                            <textarea name="" class="form-control"></textarea>
+                            <textarea name="commentaire" class="form-control"></textarea>
                         </div>
+                        <input type="hidden" name="document" id="document_this" value="">
+                        <input type="hidden" name="route_current" value="{{ app.request.attributes.get('_route') }}">
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Quitter</button>
-                    <button type="button" class="btn btn-primary">Valider</button>
+                    <button type="submit" form="form-redirect" class="btn btn-primary">Valider</button>
                 </div>
             </div>
         </div>
@@ -100,7 +101,13 @@
     {{ parent() }}
     <script>
         $(document).ready(function() {
-            $('select').selectpicker();
+
+            $(".document").click(function(event) {
+                ///console.log(event.target.id);
+                $('#document_this').val(event.target.id)
+            });
+
+            // $('select').selectpicker();
 
             $('#example').DataTable({
                 oLanguage: {

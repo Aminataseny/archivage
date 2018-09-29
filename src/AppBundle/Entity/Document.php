@@ -57,10 +57,10 @@ class Document
     private $categorie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Destinataire", inversedBy="documents")
-     * @ORM\JoinColumn(name="destinataire_id", referencedColumnName="id")
+     * Many Documents have Many Users.
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="documents")
      */
-    private $destinataire;
+    private $users;
 
     public function __constructor(){
         $this->date_creation = new \DateTime("now");
@@ -198,26 +198,44 @@ class Document
     }
 
     /**
-     * Set destinataire
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add user
      *
-     * @param \AppBundle\Entity\Destinataire $destinataire
+     * @param \AppBundle\Entity\User $user
      *
      * @return Document
      */
-    public function setDestinataire(\AppBundle\Entity\Destinataire $destinataire = null)
+    public function addUser(\AppBundle\Entity\User $user)
     {
-        $this->destinataire = $destinataire;
+        $this->users[] = $user;
 
         return $this;
     }
 
     /**
-     * Get destinataire
+     * Remove user
      *
-     * @return \AppBundle\Entity\Destinataire
+     * @param \AppBundle\Entity\User $user
      */
-    public function getDestinataire()
+    public function removeUser(\AppBundle\Entity\User $user)
     {
-        return $this->destinataire;
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
