@@ -32,9 +32,9 @@
                     </div>
                 </div>
                 {% if not is_granted('ROLE_SUPER_ADMIN') %}
-                <button class="btn btn-success btn-block">Nouveau document
+                <a href="{{ path('document_new') }}" class="btn btn-success btn-block">Nouveau document
                     <i class="mdi mdi-plus"></i>
-                </button>
+                </a>
                 {% endif %}
             </div>
         </li>
@@ -47,7 +47,7 @@
             </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{{ path('dashboard') }}">
                         <i class="menu-icon mdi mdi-television"></i>
                         <span class="menu-title">Tableau de bord</span>
                     </a>

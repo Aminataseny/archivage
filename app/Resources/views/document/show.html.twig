@@ -1,158 +1,87 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Document</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ document.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ document.titre }}</td>
-            </tr>
-            <tr>
-                <th>Datecreation</th>
-                <td>{% if document.dateCreation %}{{ document.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Commentaire</th>
-                <td>{{ document.commentaire }}</td>
-            </tr>
-            <tr>
-                <div>
-                    <button id="prev">Previous</button>
-                    <button id="next">Next</button>
-                    &nbsp; &nbsp;
-                    <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Détail document</h4>
+                    <p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <b>Titre</b> <br>
+                            {{ document.titre }}
+                        </li>
+                        <li>
+                            <b>Date de création</b> <br>
+                            {% if document.dateCreation %}{{ document.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</li>
+                        <li>
+                            <b>Comentaire</b> <br>
+                            {{ document.commentaire }}
+                        </li>
+                    </ul>
+                    </p>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Prévisualisation du document : '{{ document.titre }}'</h4>
+                    <canvas id="the-canvas" style="border:1px  solid black"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <canvas id="the-canvas"></canvas>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('document_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('document_edit', { 'id': document.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}
 
 {% block javascripts %}
 
     {{ parent() }}
 
-    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-
-    <script>
+    <script src="{{ asset('node_modules/pdfjs-dist/build/pdf.js') }}"></script>
+    <script id="script">
+        //
         // If absolute URL from the remote server is provided, configure the CORS
         // header on that server.
-        var url = '{{ asset('uploads/' ~ document.fichier) }}';
-
-        // Loaded via <script> tag, create shortcut to access PDF.js exports.
-        var pdfjsLib = window['pdfjs-dist/build/pdf'];
-
+        //
+        var url = './helloworld.pdf';
+        //
         // The workerSrc property shall be specified.
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-
-        var pdfDoc = null,
-            pageNum = 1,
-            pageRendering = false,
-            pageNumPending = null,
-            scale = 0.8,
-            canvas = document.getElementById('the-canvas'),
-            ctx = canvas.getContext('2d');
-
-        /**
-         * Get page info from document, resize canvas accordingly, and render page.
-         * @param num Page number.
-         */
-        function renderPage(num) {
-            pageRendering = true;
-            // Using promise to fetch the page
-            pdfDoc.getPage(num).then(function(page) {
+        //
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            '../../node_modules/pdfjs-dist/build/pdf.worker.js';
+        //
+        // Asynchronous download PDF
+        //
+        pdfjsLib.getDocument(url).then(function getPdfHelloWorld(pdf) {
+            //
+            // Fetch the first page
+            //
+            pdf.getPage(1).then(function getPageHelloWorld(page) {
+                var scale = 1.5;
                 var viewport = page.getViewport(scale);
+                //
+                // Prepare canvas using PDF page dimensions
+                //
+                var canvas = document.getElementById('the-canvas');
+                var context = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
-
+                //
                 // Render PDF page into canvas context
+                //
                 var renderContext = {
-                    canvasContext: ctx,
+                    canvasContext: context,
                     viewport: viewport
                 };
-                var renderTask = page.render(renderContext);
-
-                // Wait for rendering to finish
-                renderTask.promise.then(function() {
-                    pageRendering = false;
-                    if (pageNumPending !== null) {
-                        // New page rendering is pending
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
+                page.render(renderContext);
             });
-
-            // Update page counters
-            document.getElementById('page_num').textContent = num;
-        }
-
-        /**
-         * If another page rendering in progress, waits until the rendering is
-         * finised. Otherwise, executes rendering immediately.
-         */
-        function queueRenderPage(num) {
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
-        }
-
-        /**
-         * Displays previous page.
-         */
-        function onPrevPage() {
-            if (pageNum <= 1) {
-                return;
-            }
-            pageNum--;
-            queueRenderPage(pageNum);
-        }
-        document.getElementById('prev').addEventListener('click', onPrevPage);
-
-        /**
-         * Displays next page.
-         */
-        function onNextPage() {
-            if (pageNum >= pdfDoc.numPages) {
-                return;
-            }
-            pageNum++;
-            queueRenderPage(pageNum);
-        }
-        document.getElementById('next').addEventListener('click', onNextPage);
-
-        /**
-         * Asynchronously downloads PDF.
-         */
-        pdfjsLib.getDocument(url).then(function(pdfDoc_) {
-            pdfDoc = pdfDoc_;
-            document.getElementById('page_count').textContent = pdfDoc.numPages;
-
-            // Initial/first page rendering
-            renderPage(pageNum);
         });
     </script>
+    <script type="text/javascript" src="http://github.com/malsup/media/raw/master/jquery.media.js?v0.92"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.metadata.js') }}"></script>
+
 {% endblock %}

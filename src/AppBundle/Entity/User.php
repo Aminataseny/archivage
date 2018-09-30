@@ -50,7 +50,7 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Document", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Document", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(name="users_documents")
      */
     private $documents;
@@ -181,7 +181,7 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @return User
      */
-    public function addDoument(\AppBundle\Entity\Document $doument)
+    public function addDocument(\AppBundle\Entity\Document $doument)
     {
         $this->documents[] = $doument;
 
@@ -193,7 +193,7 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @param \AppBundle\Entity\Document $doument
      */
-    public function removeDoument(\AppBundle\Entity\Document $doument)
+    public function removeDocument(\AppBundle\Entity\Document $doument)
     {
         $this->documents->removeElement($doument);
     }

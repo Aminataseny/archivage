@@ -44,30 +44,10 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
         if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un aministrateur : on le rediriger vers l'espace admin
             $redirection = new RedirectResponse($this->router->generate('admin_index'));
-        } 
-        elseif (in_array('ROLE_DIRECTEUR', $rolesTab, true)) {  
-            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->router->generate('directeur_index'));
-        } 
-        elseif (in_array('ROLE_SECRETAIRE', $rolesTab, true)) {
-            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->router->generate('secretaire_index'));
-        } 
-        elseif (in_array('ROLE_COMPTABLE', $rolesTab, true)) {
-            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->router->generate('comptable_index'));
-        }
-        elseif (in_array('ROLE_TECHNICIEN', $rolesTab, true)) {
-            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->router->generate('technicien_index'));
-        } 
-        elseif (in_array('ROLE_ACHAT', $rolesTab, true)) {
-            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->router->generate('achat_index'));
         }
         else {
             // $redirection = $this->redirectToRoute('default_index');
-            $redirection = new RedirectResponse($this->router->generate('default_index'));
+            $redirection = new RedirectResponse($this->router->generate('dashboard'));
         }
 
         return $redirection;

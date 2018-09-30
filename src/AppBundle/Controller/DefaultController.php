@@ -28,17 +28,27 @@ class DefaultController extends Controller
         $commentaire = $request->get('commentaire');
         $document = $request->get('document');
         $route = $request->get('route_current');
-
+        // dump($request); die;
         if($users){
             foreach ($users as $user) {
                 $user = $em->getRepository('AppBundle:User')->find($user);
-                if($user){
-                    if ($document) {
-                        $document = $em->getRepository('AppBundle:Document')->find($document) ;
-                        $user->addDocument($document) ;
 
-                        return $this->redirectToRoute($route) ;
-                    }
+                if($user){
+                    $document = $em->getRepository('AppBundle:Document')->find($document) ;
+                    $document->setCommentaire($commentaire);
+
+                    $user->addDocument($document) ;
+                    $document->addUser($user) ;
+
+                    $em->persist($user);
+                    $em->persist($document);
+                    $em->flush();
+
+                    // Retrieve flashbag from the controller
+                    $flashbag = $this->get('session')->getFlashBag();
+                    $flashbag->add("success", "Votre document a été bien transféré.");
+
+                    return $this->redirectToRoute($route) ;
                 }
             }
         }
@@ -47,4 +57,22 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute($route) ;
     }
+
+    /**
+     * @Route("/dashboard",name="dashboard")
+     */
+    public function dashboardAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        //$documents = $em->getRepository('AppBundle:Document')->findAll();
+        $documents = $this->getUser()->getDocuments();
+        $users = $em->getRepository('AppBundle:User')->findAll();
+
+        return $this->render('default\dashboard.html.twig', array(
+            "documents" => $documents,
+            "users" => $users
+        ));
+    }
+
+
 }

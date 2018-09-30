@@ -58,7 +58,7 @@ class Document
 
     /**
      * Many Documents have Many Users.
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="documents")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="documents", cascade={"persist"})
      */
     private $users;
 

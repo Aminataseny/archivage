@@ -4,7 +4,21 @@
     <h1>Création de document</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+    {{ form_label(form.titre) }}
+    {{ form_widget(form.titre) }}
+    <br>
+    {{ form_label(form.fichier) }}
+    {{ form_widget(form.fichier) }}
+    <br>
+    {{ form_label(form.commentaire) }}
+    {{ form_widget(form.commentaire) }}
+    <br>
+    {{ form_label(form.categorie) }}
+    {{ form_widget(form.categorie) }}
+    <br>
+    {{ form_label(form.users, 'Destinataires') }}
+    {{ form_widget(form.users) }}
+    <br>
         <input class="btn btn-primary btn-block" type="submit" value="Enregistrer" />
     {{ form_end(form) }}
 
