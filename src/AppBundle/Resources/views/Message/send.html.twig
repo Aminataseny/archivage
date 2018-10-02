@@ -1,0 +1,36 @@
+{% extends "AppBundle:Message:inbox.html.twig" %}
+
+{% block message %}
+    <h3>Mes envoies</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox">
+            </th>
+            <th>Expéditeur</th>
+            <th>Sujet</th>
+            <td>Date</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for thread in threads %}
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                    <a style="cursor: pointer" href="{{ path('message_show', {'id' : thread.id}) }}">
+                        {{ thread.createdBy }}
+                    </a>
+                </td>
+                <td>
+                    <a style="cursor: pointer" href="{{ path('message_show', {'id' : thread.id}) }}">
+                        <code>{{ thread.subject }}</code>
+                    </a>
+                </td>
+                <td>{{ thread.createdAt | date('d m Y h:m:i') }}</td>
+            </tr>
+            </a>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

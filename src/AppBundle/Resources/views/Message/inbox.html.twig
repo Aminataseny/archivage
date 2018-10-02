@@ -1,0 +1,77 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Boite de réception{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="{{ path('message_compose') }}" class="btn btn-primary">Nouveau message</a>
+                    </h4>
+                    <p>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{ path('message_inbox') }}">Boite de réception</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ path('message_send') }}">Boite d'envoie</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ path('message_draft') }}">Brouillon</a>
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 loadingInProgress" tabindex="1">
+            <div class="se-pre-con"></div>
+            <div class="card">
+                <div class="card-body">
+                    {% for message in app.flashes('send') %}
+                        <div class="flash-notice alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% block message %}
+                        <h3>Mes messages</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox">
+                                    </th>
+                                    <th>Expéditeur</th>
+                                    <th>Sujet</th>
+                                    <td>Date</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for thread in threads %}
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <a style="cursor: pointer" href="{{ path('message_show', {'id' : thread.id}) }}">
+                                                {{ thread.createdBy }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a style="cursor: pointer" href="{{ path('message_show', {'id' : thread.id}) }}">
+                                            <code>{{ thread.subject }}</code>
+                                            </a>
+                                        </td>
+                                        <td>{{ thread.createdAt | date('d m Y h:m:i') }}</td>
+                                    </tr>
+                                </a>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "AppBundle:Message:inbox.html.twig" %}
+
+{% block message %}
+
+    <table class="table table-borderer">
+        <tbdoy>
+            <tr>
+                <td><b>Expéditeur</b></td>
+                <td>{{ thread.createdBy }}</td>
+            </tr>
+            <tr>
+                <td><b>Sujet</b></td>
+                <td>{{ subject }}</td>
+            </tr>
+            <tr>
+                <td><b>Message</b></td>
+                <td>{{ body }}</td>
+            </tr>
+        </tbdoy>
+        <tfoot>
+
+            {% for response in thread.messages %}
+                <tr>
+                    <td>Répondre :</td>
+                    <td>{{ response.sender }}</td>
+                    <td>{{ response.body }}</td>
+                </tr>
+            {% endfor %}
+
+        </tfoot>
+    </table>
+    <br>
+    <form action="{{ path('message_response') }}" method="post">
+        <textarea name="message" class="form-control"></textarea>
+        <input type="hidden" name="thread" value="{{ thread.id }}">
+        <input type="submit" value="Répondre" class="btn btn-primary">
+    </form>
+{% endblock %}

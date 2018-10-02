@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Document
@@ -61,10 +62,6 @@ class Document
      * @ORM\ManyToMany(targetEntity="User", mappedBy="documents", cascade={"persist"})
      */
     private $users;
-
-    public function __constructor(){
-        $this->date_creation = new \DateTime("now");
-    }
 
 
     /**
@@ -203,6 +200,7 @@ class Document
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime('now') ;
     }
 
     /**

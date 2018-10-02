@@ -117,19 +117,23 @@ class DocumentController extends Controller
     /**
      * Deletes a document entity.
      *
-     * @Route("/{id}", name="document_delete")
+     * @Route("/delete/{id}", name="document_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Document $document)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($document);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($document);
-            $em->flush();
-        }
+        $document = $em->getRepository('AppBundle:Document')->find($id);
+        $em->remove($document);
+        $em->flush();
+
+        // Retrieve flashbag from the controller
+        $flashbag = $this->get('session')->getFlashBag();
+
+        // Add flash message
+        $flashbag->add("failed_approve", "Le document '". $document->getTitre(). "'' a été supprimé !");
+
 
         return $this->redirectToRoute('document_index');
     }

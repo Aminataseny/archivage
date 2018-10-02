@@ -10,7 +10,13 @@
                   <a class="btn btn-primary" href="{{ path('document_new') }}">Enregistrer un nouveau document</a>
                   </p>
                   <div class="table-responsive">
-    
+
+
+                      {% for message in app.flashes('failed_approve') %}
+                          <div class="flash-notice alert alert-danger">
+                              {{ message }}
+                          </div>
+                      {% endfor %}
 
     <table class="table table-striped table-bordered" id="example" style="width:100%">
         <thead>
@@ -37,6 +43,10 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <a class="btn btn-warning" href="{{ path('document_edit', { 'id': document.id }) }}">
                         <i class="mdi mdi-account-edit"></i>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-danger" href="{{ path('document_delete', { 'id': document.id }) }}">
+                        <i class="mdi mdi-delete"></i>
                     </a>
                 </td>
             </tr>

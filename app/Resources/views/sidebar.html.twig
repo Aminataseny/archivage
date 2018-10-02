@@ -38,6 +38,18 @@
                 {% endif %}
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('dashboard') }}">
+                <i class="menu-icon mdi mdi-television"></i>
+                <span class="menu-title">Tableau de bord</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('categorie_index') }}">
+                <i class="menu-icon mdi mdi-television"></i>
+                <span class="menu-title">Catégories</span>
+            </a>
+        </li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('admin_index') }}">
@@ -45,13 +57,6 @@
                     <span class="menu-title">Utilisateurs</span>
                 </a>
             </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('dashboard') }}">
-                        <i class="menu-icon mdi mdi-television"></i>
-                        <span class="menu-title">Tableau de bord</span>
-                    </a>
-                </li>
         {% endif %}
         {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_DIRECTEUR') %}
         <li class="nav-item">
@@ -68,9 +73,9 @@
             </li>
         {% endif %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('document_my_docs') }}">
-                <i class="menu-icon mdi mdi-elevation-rise"></i>
-                <span class="menu-title">Liste de mes documents</span>
+            <a class="nav-link" href="{{ path('message_inbox') }}">
+                <i class="menu-icon mdi mdi-mailbox"></i>
+                <span class="menu-title">Messagerie</span>
             </a>
         </li>
     </ul>
