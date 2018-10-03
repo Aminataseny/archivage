@@ -50,7 +50,7 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Document", inversedBy="users", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Document", mappedBy="users")
      * @ORM\JoinTable(name="users_documents")
      */
     private $documents;

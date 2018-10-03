@@ -38,7 +38,7 @@ class DefaultController extends Controller
                     $document->setCommentaire($commentaire);
 
                     $user->addDocument($document) ;
-                    $document->addUser($user) ;
+                    // $document->addUser($user) ;
 
                     $em->persist($user);
                     $em->persist($document);
@@ -59,7 +59,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/dashboard",name="dashboard")
+     * @Route("/", name="dashboard")
      */
     public function dashboardAction() {
         $em = $this->getDoctrine()->getManager();

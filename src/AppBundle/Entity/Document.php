@@ -59,7 +59,7 @@ class Document
 
     /**
      * Many Documents have Many Users.
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="documents", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="documents")
      */
     private $users;
 

@@ -56,8 +56,20 @@ class AdminController extends Controller
      */
     public function statsAction()
     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('AppBundle:Categorie')->findAll();
+
+        $comptes = array() ;
+        foreach ($categories as $category){
+            $documents = $em->getRepository('AppBundle:Document')->findBy(['categorie' => $category]);
+            $comptes[$category->getId()] = count($documents);
+        }
+
         return $this->render('AppBundle:Admin:stats.html.twig', array(
-           // ...
+           "comptes" => $comptes,
+            "categories" => $categories
         ));
     }
 }

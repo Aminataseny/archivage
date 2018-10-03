@@ -1,32 +1,64 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Categorie</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ categorie.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Détail catégorie</h4>
+                    <p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <b>Titre</b> <br>
+                            {{ categorie.nom }}
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 loadingInProgress" tabindex="1">
+            <div class="se-pre-con"></div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Liste des documents de '{{ categorie }}'</h4>
+                    <table class="table table-responsive" id="example">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Date d'enregistrement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for document in documents %}
+                            <tr>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ path('document_show', { 'id': document.id }) }}">
+                                    {{ document.titre }}
+                                    </a>
+                                </td>
+                                <td>{% if document.dateCreation %}{{ document.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-    <ul>
-        <li>
-            <a href="{{ path('categorie_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('categorie_edit', { 'id': categorie.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+{% block javascripts%}
+
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"> </script>
+
 {% endblock %}

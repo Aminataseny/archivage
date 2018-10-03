@@ -26,10 +26,18 @@ class CategorieController extends Controller
 
         $categories = $em->getRepository('AppBundle:Categorie')->findAll();
 
+        $comptes = array() ;
+        foreach ($categories as $category){
+            $documents = $em->getRepository('AppBundle:Document')->findBy(['categorie' => $category]);
+            $comptes[$category->getId()] = count($documents);
+        }
+
         return $this->render('categorie/index.html.twig', array(
             'categories' => $categories,
+            'comptes' => $comptes
         ));
     }
+
 
     /**
      * Creates a new categorie entity.
@@ -67,8 +75,13 @@ class CategorieController extends Controller
     {
         $deleteForm = $this->createDeleteForm($categorie);
 
+        $em = $this->getDoctrine()->getManager();
+
+        $documents = $em->getRepository('AppBundle:Document')->findBy(['categorie' => $categorie]);
+
         return $this->render('categorie/show.html.twig', array(
             'categorie' => $categorie,
+            'documents' => $documents,
             'delete_form' => $deleteForm->createView(),
         ));
     }

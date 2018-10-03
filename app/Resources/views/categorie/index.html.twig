@@ -5,23 +5,25 @@
 
     <div class="row">
     {% for categorie in categories %}
-        <div class="col-md-auto grid-margin stretch-card">
-            <div class="card card-statistics">
-                <div class="card-body">
-                    <div class="clearfix">
-                        <div class="float-left">
-                            <i class="mdi mdi-cube text-danger icon-lg"></i>
-                        </div>
-                        <div class="float-right">
-                            <p class="mb-0 text-right">50 documents</p>
-                            <div class="fluid-container">
-                                <h3 class="font-weight-medium text-right mb-0">{{ categorie.nom }}</h3>
+        <a href="{{ path('categorie_show', {'id': categorie.id}) }}">
+            <div class="col-md-auto grid-margin stretch-card">
+                <div class="card card-statistics">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="mdi mdi-cube text-danger icon-lg"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">{{ comptes[categorie.id] }} documents</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0">{{ categorie.nom }}</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     {% endfor %}
-
+    </div>
 {% endblock %}
