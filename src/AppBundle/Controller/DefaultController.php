@@ -33,16 +33,15 @@ class DefaultController extends Controller
             foreach ($users as $user) {
                 $user = $em->getRepository('AppBundle:User')->find($user);
 
+                // dump($user); die;
+
                 if($user){
                     $document = $em->getRepository('AppBundle:Document')->find($document) ;
                     $document->setCommentaire($commentaire);
-
-                    $user->addDocument($document) ;
-                    // $document->addUser($user) ;
-
-                    $em->persist($user);
+                    $document->addUser($user);
                     $em->persist($document);
                     $em->flush();
+
 
                     // Retrieve flashbag from the controller
                     $flashbag = $this->get('session')->getFlashBag();

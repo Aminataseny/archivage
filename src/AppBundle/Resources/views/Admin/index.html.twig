@@ -20,13 +20,12 @@
                             {{ message }}
                         </div>
                     {% endfor %}
-                    <table class="table">
+                    <table class="table" id="example">
                         <thead>
                         <tr>
                             <th>Prénom & nom</th>
                             <th>Role(s)</th>
                             <th>Nom d'utilisateur</th>
-                            <th>Email</th>
                             <th>Statut</th>
                             <th></th>
                         </tr>
@@ -43,7 +42,6 @@
                                 </ul>
                             </td>
                             <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
                             <td>
                                 {% if user.enabled == true %}
                                 <label class="badge badge-success">activer</label>
@@ -71,4 +69,17 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts%}
+
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"> </script>
+
 {% endblock %}
